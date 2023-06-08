@@ -1,11 +1,12 @@
 const BASE_URL = 'https://www.pre-onboarding-selection-task.shop';
 
-const fetchJson = async ({ apiEndpoint, body }) => {
+const fetchJson = async ({ apiEndpoint, method, acessToken, body }) => {
   try {
     const res = await fetch(`${BASE_URL}${apiEndpoint}`, {
-      method: 'post',
+      method,
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${acessToken}`,
       },
       body: JSON.stringify(body),
       credentials: 'same-origin',

@@ -1,5 +1,8 @@
+import { withAuth } from '@/src/commons/hocs/widthAuth';
+import Todo from '@/src/components/todo/todo.container';
+
 const TodoPage = () => {
-  return <p>todo 페이지</p>;
+  return <Todo />;
 };
 
-export default TodoPage;
+export default withAuth(TodoPage);

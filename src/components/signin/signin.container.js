@@ -4,6 +4,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import SignInUI from './signin.presenter';
 import fetchJson from '@/src/commons/api';
 import { useRouter } from 'next/router';
+import { useRecoilState } from 'recoil';
+import { AccessTokenState } from '@/src/commons/store';
 
 const schema = yup.object({
   email: yup.string().email().required('이메일은 필수 항목입니다.'),
@@ -12,6 +14,8 @@ const schema = yup.object({
 
 const SignIn = () => {
   const router = useRouter();
+
+  const [, setAccessToken] = useRecoilState(AccessTokenState);
 
   const onClickBack = () => {
     router.back();
@@ -30,6 +34,7 @@ const SignIn = () => {
 
     fetchJson({
       apiEndpoint: '/auth/signin',
+      method: 'post',
       body: InfoData,
     }).then((json) => {
       if (Math.floor(json?.statusCode / 100) % 10 === 4) {
@@ -40,7 +45,9 @@ const SignIn = () => {
         }
       } else {
         if (json.access_token) {
+          setAccessToken(json.access_token);
           alert('로그인 성공');
+          router.push('/todo');
         }
       }
     });

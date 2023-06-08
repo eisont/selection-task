@@ -30,6 +30,7 @@ const SignUp = () => {
 
     fetchJson({
       apiEndpoint: '/auth/signup',
+      method: 'post',
       body: InfoData,
     }).then((json) => {
       if (Math.floor(json?.statusCode / 100) % 10 === 4) {
